@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal Tom | Software Engineer Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=download" />
+    <style>
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #fafafa;
+            --accent: #6366f1;
+            --muted: #737373;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary);
+            color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Grain Texture Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Line Drawing Animation */
+        .line-draw {
+            width: 0%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .line-draw.active {
+            width: 100%;
+        }
+
+        /* Skill Tag Hover */
+        .skill-tag {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-tag:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Experience Card */
+        .exp-card {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exp-card:hover {
+            border-left-color: rgba(99, 102, 241, 0.8);
+            padding-left: 2rem;
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%);
+        }
+
+        /* Floating Elements */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #6366f1 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Achievement Badge */
+        .achievement-badge {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover {
+            transform: scale(1.05);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        /* Link Underline Effect */
+        .link-hover {
+            position: relative;
+            display: inline-block;
+        }
+
+        .link-hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .link-hover:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Navigation - Backdrop Blur */
+        .nav-blur {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Hero text initial state */
+        .hero-name {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <!-- <div class="custom-cursor"></div> -->
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-12 py-5 nav-blur border-b border-white/10 transition-all duration-500"
+        id="navbar">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+            <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+                class="text-xl font-bold tracking-tighter hover:opacity-70 transition-opacity cursor-hover">
+                VT<span class="text-indigo-500">.</span>
+            </a>
+
+            <div class="flex items-center gap-8 text-sm font-medium tracking-wide">
+                <a href="#about" class="link-hover   cursor-hover">About</a>
+                <a href="#experience" class="link-hover   cursor-hover">Experience</a>
+                <a href="#skills" class="link-hover   cursor-hover">Skills</a>
+                <a href="#contact" class="link-hover   cursor-hover">Contact</a>
+                <a href="/files/Vishal_Tom_Resume.pdf" target="_blank" download class="inline-flex items-center gap-2 link-hover cursor-hover group">
+                <span>Resume</span>
+                <span class="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:translate-y-0.5">
+                        download</span>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-12 pt-20 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl float-anim"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl float-anim"
+                style="animation-delay: -3s;"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[1400px] mx-auto text-center">
+            <div class="mb-6">
+                <p class="text-sm tracking-[0.3em] uppercase text-neutral-400 hero-subtitle opacity-0">
+                    Software Engineer
+                </p>
+            </div>
+
+            <h1 class="text-[10vw] leading-[0.85] font-bold tracking-tighter mb-8">
+                <div class="hero-name">VISHAL</div>
+                <div class="hero-name gradient-text">TOM</div>
+            </h1>
+
+            <div class="max-w-2xl mx-auto mb-12">
+                <p class="text-lg text-neutral-400 font-light leading-relaxed hero-fade opacity-0">
+                    Specializing in designing and building scalable cloud-native platforms. I bridge the gap between
+                    high-level architecture and hands-on implementation.
+                </p>
+            </div>
+
+            <div class="flex gap-4 justify-center items-center hero-fade opacity-0">
+                <a href="#download"
+                    class="inline-flex items-center gap-2 px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-all duration-300 group">
+                    Resume
+                    <span
+                        class="material-symbols-outlined text-[20px] transition-transform group-hover:translate-y-0.5">download</span>
+                </a>
+                <a href="#contact"
+                    class="px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-colors cursor-hover">
+                    Get in Touch
+                </a>
+                <a href="#about" id="discoverBtn"
+                    class="relative overflow-hidden px-8 py-4 border border-white/40 text-white font-medium rounded-full transition-colors duration-700 cursor-hover">
+                    <span class="relative z-10 transition-colors duration-700">
+                        Explore More
+                    </span>
+                    <span
+                        class="absolute inset-0 bg-white scale-x-0 origin-left transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-full">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </a>
+    </section>
+
+    <section id="about" class="px-12">
+        <div class="max-w-[1800px] mx-auto py-16">
+            <div class="line-draw mb-12"></div>
+
+            <div class="grid grid-cols-12 gap-12 items-start">
+                <div class="col-span-4 sticky top-32">
+                    <h2 class="text-sm tracking-[0.2em] uppercase text-neutral-500 mb-2">About</h2>
+                    <p class="text-5xl font-bold tracking-tight">The Engineer</p>
+                </div>
+
+                <div class="col-span-7 space-y-8 text-lg text-neutral-300 leading-relaxed">
+                    <p
+                        class="about-text text-4xl md:text-5xl font-semibold racking-tight mb-16 opacity-0 translate-y-8">
+                        I design and build distributed systems that operate at scale.
+                    </p>
+                    <p class="about-text opacity-0 translate-y-8">
+                        With 8 years in cloud engineering, I develop event-driven, cloud-native platforms powering
+                        high-throughput production workloads across global environments.
+                    </p>
+                    <p class="about-text opacity-0 translate-y-8">
+                        I think in systems — trade-offs, failure scenarios, long-term maintainability. I build for
+                        resilience, performance and cost efficiency.
+                    </p>
+                    <p class="about-text text-white opacity-0 translate-y-8">
+                        Clarity over complexity. Fundamentals over trends.
+                    </p>
+                    <p class="about-text opacity-0 translate-y-8">
+
+                        From concept to production, I take ownership end-to-end.
+                    </p>
+                    <!-- <p class="about-text text-neutral-400 text-base mt-10 opacity-0 translate-y-8">
+                        Currently working as a Software Engineer Specialist in Cloud Engineering that operate at global scale in HP.
+                    </p> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics -->
+    <section class="px-12 py-16 border-t border-white/10">
+        <div class="max-w-[1800px] mx-auto">
+            <div class="grid grid-cols-4 gap-8">
+                <div class="text-center">
+                    <span class="text-6xl font-bold text-white block mb-2"><span class="counter"
+                            data-target="8">0</span></span>
+                    <span class="text-sm text-neutral-500 uppercase tracking-wider">Years Experience</span>
+                </div>
+                <div class="text-center">
+                    <span class="text-6xl font-bold text-white block mb-2 counter" data-target="250">0</span>
+                    <span class="text-sm text-neutral-500 uppercase tracking-wider">Million Devices</span>
+                </div>
+                <div class="text-center">
+                    <span class="text-6xl font-bold text-white block mb-2"><span class="counter"
+                            data-target="75">0</span>M</span>
+                    <span class="text-sm text-neutral-500 uppercase tracking-wider">Requests Per Day</span>
+                </div>
+                <div class="text-center">
+                    <span class="text-6xl font-bold text-white block mb-2">$<span class="counter"
+                            data-target="300">0</span>K</span>
+                    <span class="text-sm text-neutral-500 uppercase tracking-wider">Annual Cost Savings</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="px-12 py-16">
+        <div class="max-w-[1800px] mx-auto">
+            <div class="mb-16">
+                <h2 class="text-sm tracking-[0.2em] uppercase text-neutral-500 mb-2">Career</h2>
+                <p class="text-6xl font-bold tracking-tight">Experience</p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- HP - Current -->
+                <div class="exp-card pl-8 py-8 group cursor-hover">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">HP Inc.
+                            </h3>
+                            <p class="text-neutral-400">Software Engineer Specialist</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm text-neutral-500 block">2021 — Present</span>
+                            <span
+                                class="text-xs text-indigo-400 border border-indigo-400/30 px-3 py-1 rounded-full">Current</span>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-neutral-300 max-w-4xl">
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span>Architectural redesign of GDPR compliance platform, migrating from DynamoDB to RDS,
+                                achieving <span class="text-white font-semibold">~$20K monthly savings</span> and <span
+                                    class="text-white font-semibold">90% reduction</span> in resource usage</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span>Developed event-driven Java microservices hosted on AWS EC2 leveraging RabbitMQ, AWS
+                                SQS/SNS across large distributed systems</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span>Participated and won multiple company-wide hackathons</span>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="exp-card pl-8 py-8 group cursor-hover">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">Infosys
+                                Ltd.
+                            </h3>
+                            <p class="text-neutral-400">Senior Systems Engineer</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm text-neutral-500">2018 — 2021</span>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-neutral-300 max-w-4xl">
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span><strong>Scalability:</strong> Managed high-throughput microservices on AWS IoT,
+                                supporting <span class="text-white font-semibold">200M+ devices</span> across multiple
+                                business units</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span><strong>Serverless Innovation:</strong> Leveraged AWS Lambda, DynamoDB, and message
+                                brokers to build high-reliability privacy compliance solutions</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></span>
+                            <span><strong>Observability:</strong> Built dashboards to provide real-time visibility into
+                                system health, directly reducing production incident recovery time</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Infosys -->
+                <div class="exp-card pl-8 py-8 group cursor-hover">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">Infosys
+                            </h3>
+                            <p class="text-neutral-400">Senior Systems engineering</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm text-neutral-500">Jul 2018—Feb 2021</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-medium mb-3 text-white">Senior Systems Engineer <span
+                                    class="text-sm text-neutral-500 font-normal">(2020—2021)</span></h4>
+                            <ul class="space-y-2 text-neutral-300 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1 h-1 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                    <span>Delivered microservices-based application for <span
+                                            class="text-white font-semibold">300K+ employees</span> from concept to
+                                        production</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1 h-1 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                    <span>Won the <span class="text-white font-semibold">Torch Bearer Award</span> for
+                                        technical contributions</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-medium mb-3 text-white">Systems Engineer <span
+                                    class="text-sm text-neutral-500 font-normal">(2018—2020)</span></h4>
+                            <ul class="space-y-2 text-neutral-300 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1 h-1 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                    <span>Developed services in .NET, supported transition to microservice
+                                        architecture</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-1 h-1 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                                    <span>Recognized with <span class="text-white font-semibold">Star Rookie</span> and
+                                        <span class="text-white font-semibold">Insta Award</span></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="px-12 py-16 border-t border-white/10">
+        <div class="max-w-[1800px] mx-auto">
+            <div class="grid grid-cols-2 gap-12 mb-16 items-end">
+                <div>
+                    <span class="text-sm tracking-[0.2em] uppercase text-neutral-500 mb-2 block">Capabilities</span>
+                    <h2 class="text-6xl font-bold tracking-tight">Technical Skills</h2>
+                </div>
+                <div class="text-right">
+                    <p class="text-neutral-400 max-w-md ml-auto">
+                        Specialized in cloud-native architectures, distributed systems, and IoT platforms.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-6">
+                <div
+                    class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-6 text-indigo-400">Cloud & Infra</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">AWS EC2</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Lambda</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">IoT Core</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">DynamoDB</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">RDS</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">SQS/SNS</span>
+                    </div>
+                </div>
+
+                <div
+                    class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-6 text-purple-400">Programming</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Java</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">.NET</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">SQL</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Python</span>
+                    </div>
+                </div>
+
+                <div
+                    class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-6 text-pink-400">Messaging</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">RabbitMQ</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Apache Kafka</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">AWS SQS</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">AWS SNS</span>
+                    </div>
+                </div>
+
+                <div
+                    class="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500">
+                    <h3 class="text-xl font-bold mb-6 text-blue-400">Architecture</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Microservices</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Event-Driven</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">Distributed</span>
+                        <span class="skill-tag inline-block px-3 py-1 rounded-full text-xs">GDPR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 px-6 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl float-anim"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl float-anim"
+                style="animation-delay: -3s;"></div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-900/10 to-transparent"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h2 class="text-sm tracking-[0.2em] uppercase text-neutral-500 mb-4">Let's Connect</h2>
+            <p class="text-5xl md:text-7xl font-bold tracking-tight mb-8">Interested In<br>Working<span
+                    class="gradient-text"> Together</span></p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+                <a href="mailto:vishal.tom995@gmail.com"
+                    class="inline-flex items-center px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-neutral-200 transition-all flex items-center gap-3 group">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Email Me
+                </a>
+
+                <a href="https://www.linkedin.com/in/vishal--tom" target="_blank"
+                    class="px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-all flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-white/10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-neutral-500 text-sm">©2026 Vishal Tom.</p>
+            <p class="mt-1 text-indigo-400">Available for work.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // FIXED Hero Animations - Using fromTo to ensure both names animate
+        window.addEventListener('load', () => {
+            // Animate VISHAL and TOM together
+            gsap.fromTo('.hero-name',
+                {
+                    y: 60,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: 'power4.out',
+                    delay: 0.2
+                }
+            );
+
+            // Subtitle
+            gsap.to('.hero-subtitle', {
+                opacity: 1,
+                duration: 1,
+                delay: 0.6,
+                ease: 'power3.out'
+            });
+
+            // Subtext and buttons
+            gsap.to('.hero-fade', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: 'power3.out',
+                delay: 0.8
+            });
+        });
+
+        // NAVBAR AUTO-HIDE
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 50) {
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.opacity = '1';
+            } else if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+                navbar.style.opacity = '0';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.opacity = '1';
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Line Draw Animation
+        const lineDraws = document.querySelectorAll('.line-draw');
+        lineDraws.forEach(line => {
+            ScrollTrigger.create({
+                trigger: line,
+                start: 'top 80%',
+                onEnter: () => line.classList.add('active')
+            });
+        });
+
+        // About Text Reveal
+        gsap.utils.toArray('.about-text').forEach((text, i) => {
+            gsap.to(text, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: text,
+                    start: 'top 85%'
+                }
+            });
+        });
+
+        // Experience Cards Animation
+        gsap.utils.toArray('.exp-card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                x: -50,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                }
+            });
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+
+            ScrollTrigger.create({
+                trigger: counter,
+                start: 'top 85%',
+                onEnter: () => {
+                    gsap.to(counter, {
+                        innerHTML: target,
+                        duration: 2,
+                        snap: { innerHTML: 1 },
+                        ease: 'power2.out'
+                    });
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for floating elements
+        document.addEventListener('mousemove', (e) => {
+            const floatElements = document.querySelectorAll('.float-anim');
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+
+            floatElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.5;
+                el.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
+            });
+        });
+
+        window.addEventListener("load", () => {
+            const btn = document.getElementById("discoverBtn");
+            const fill = btn.querySelector("span:last-child");
+
+            setTimeout(() => {
+                fill.classList.remove("scale-x-0");
+                fill.classList.add("scale-x-100");
+                btn.classList.remove("text-white");
+                btn.classList.add("text-black");
+            }, 1050); // slight delay for premium feel
+        });
+    </script>
+</body>
+
+</html>
