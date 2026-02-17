@@ -4,10 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishal Tom | Software Engineer Specialist</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.tailwindcss.com;
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;
+img-src 'self' data:; connect-src 'self';">
+    <title>Vishal Tom | Software Engineer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/gsap.min.js" defer></script>
+    <script src="js/ScrollTrigger.min.js" defer></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -204,8 +208,9 @@
                 <a href="#experience" class="link-hover   cursor-hover">Experience</a>
                 <a href="#skills" class="link-hover   cursor-hover">Skills</a>
                 <a href="#contact" class="link-hover   cursor-hover">Contact</a>
-                <a href="files/VishalTom_CV.pdf" target="_blank" class="inline-flex items-center gap-2 link-hover cursor-hover group">
-                <span>Resume</span>
+                <a href="files/VishalTom_CV.pdf" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 link-hover cursor-hover group">
+                    <span>Resume</span>
                 </a>
 
             </div>
@@ -554,7 +559,7 @@
                     Email Me
                 </a>
 
-                <a href="https://www.linkedin.com/in/vishal--tom" target="_blank"
+                <a href="https://www.linkedin.com/in/vishal--tom" target="_blank" rel="noopener noreferrer"
                     class="px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 transition-all flex items-center gap-3">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path
